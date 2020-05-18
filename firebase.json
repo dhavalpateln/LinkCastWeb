@@ -6,11 +6,27 @@
       "**/.*",
       "**/node_modules/**"
     ],
+	/*"redirects": [ {
+		// Returns a permanent redirect to "/bar" for requests to "/foo" (but not "/foo/**")
+		"source": "/foo",
+		"destination": "/login.html",
+		"type": 301
+	}, {
+		// Returns a permanent redirect to "/bar" for requests to both "/foo" and "/foo/**"
+		"source": "/login{,/**}",
+		"destination": "/login.html",
+		"type": 301
+	} ],*/
     "rewrites": [
       {
-        "source": "**",
+        "source": "/home{,/**}",
         "destination": "/index.html"
-      }
+      },
+	  {
+		// Returns a permanent redirect to "/bar" for requests to both "/foo" and "/foo/**"
+		"source": "/login{,/**}",
+		"destination": "/login.html"
+	  }
     ]
   },
   "database": {

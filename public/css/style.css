@@ -1,0 +1,82 @@
+html, body { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+    height: 100%;
+	overflow: hidden;
+}
+
+#headerContainer {
+	height: 50px;
+    background: #1c9a8e;
+}
+
+#imageContainer {
+	display: inline-block;
+    height: 100%;
+    width: 6%;
+	vertical-align: top;
+}
+
+#titleContainer {
+	display: inline-block;
+    width: 88%;
+    height: 100%;
+	text-shadow: 1px 1px 3px #03A9F4;
+}
+
+#logOutButtonContainer {
+	width: 5%;
+    height: 100%;
+    display: inline-block;
+	vertical-align: top;
+}
+
+#contentContainer {
+	height: 93%;
+    background: #f3f3f3;
+    padding: 3%;
+}
+
+#linkContainer {
+	width: 85%;
+    margin: auto;
+    height: 90%;
+    background: white;
+    /* border: 2px solid black; */
+    box-shadow: 0px 0px 4px 1px;
+}
+
+.listItemButtonContainer {
+	right: 3%;
+    position: absolute;
+}
+
+#videoContainer {
+	display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	z-index: 1002;
+}
+
+#fade {
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .80;
+  filter: alpha(opacity=80);
+}
+
+video {
+    width: 500px;
+    height: 280px;
+	box-shadow: 0px 0px 4px 1px #03A9F4;
+}

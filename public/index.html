@@ -6,15 +6,21 @@
     <title>Welcome to Firebase Hosting</title>
 
     <!-- update the version number as needed -->
-    <script defer src="/__/firebase/5.7.2/firebase-app.js"></script>
+    <script src="/__/firebase/7.14.4/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/5.7.2/firebase-auth.js"></script>
-    <script defer src="/__/firebase/5.7.2/firebase-database.js"></script>
-    <script defer src="/__/firebase/5.7.2/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/5.7.2/firebase-storage.js"></script>
+    <script src="/__/firebase/7.14.4/firebase-auth.js"></script>
+    <script src="/__/firebase/7.14.4/firebase-database.js"></script>
+    <script src="/__/firebase/7.14.4/firebase-messaging.js"></script>
+    <script src="/__/firebase/7.14.4/firebase-storage.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-
+    <script src="/__/firebase/init.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+	
+	<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
       #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
@@ -33,90 +39,53 @@
 		height: 400px;
 	  }
     </style>
+	
+	<link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-	<h1 id='title'></h1>
-	<a id='player'> LINK </a>
+	<div id="fade" onClick="closeVideoPlayer();"></div>
+	<div id="videoContainer">
+		<video id="videoPlayer" controls></video>
+	</div>
+	<div id="headerContainer">
+		<div id="imageContainer">
+			<img src="imgs/icon.png" width="45" height="45" style="
+				/* margin-left: 10px; */
+				top: 50%;
+				left: 50%;
+				position: relative;
+				transform: translate(-50%, -50%);
+			">
+		</div>
+		<div id="titleContainer">
+			<h1 style="
+					font-family: 'Comfortaa', cursive;
+					font-size: 45px;
+					transform: translate(0%, -50%);
+					">LinkCast</h1>
+		</div>
+		<div id="logOutButtonContainer">
+			<button id="singOutButton" class="mdc-fab" aria-label="log out" style="
+					width: 40px;
+					height: 40px;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+				">
+				<div class="mdc-fab__ripple"></div>
+				<span class="mdc-fab__icon material-icons">power_settings_new</span>
+			</button>
+		</div>
+	</div>
+	<div id="contentContainer">
+		<div id="linkContainer">
+			<ul id="listUL" class="mdc-list"></ul>
+		</div>
+	</div>
 	
-	<ul id='linkList'>
-		
-	</ul>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          //document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          //document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-		/*var config = {
-			apiKey: "AIzaSyBWmaeXC-flwtaICTWFQnadEsdcSJOTBXg",
-			authDomain: "linkcast-fbdff.firebaseapp.com",
-			databaseURL: "https://linkcast-fbdff.firebaseio.com/",
-			storageBucket: "gs://linkcast-fbdff.appspot.com"
-		};
-		firebase.initializeApp(config);
-		*/
-		var database = firebase.database();
-		
-		var linkListener = database.ref('title');
-		linkListener.on('value', function(snapshot) {
-			document.getElementById('player').innerHTML = snapshot.val();
-		});
-		database.ref('url').on('value', snapshot => { document.getElementById('player').href = snapshot.val();/*document.getElementById('player').src = snapshot.val();*/ });
-		/*database.ref('link').on('value', function(snapshot) {
-			console.log(snapshot);
-			snapshot.forEach(function(childSnapshot) {
-				console.log(childSnapshot);
-			});
-		});*/
-		database.ref('link').on('child_added', function(snapshot){
-			var link = snapshot.val();
-			console.log(snapshot.key + " " + link.title + " " + link.url);
-			var listItem = document.createElement("li");
-			listItem.append(createListElement(link.title, link.url));
-			listItem.id = snapshot.key;
-			var list = document.getElementById('linkList');
-			list.insertBefore(listItem, list.childNodes[0]);
-		});
-		database.ref('link').on('child_removed', function(snapshot) {
-			var id = snapshot.key;
-			var element = document.getElementById(id);
-			element.parentNode.removeChild(element);
-		});
-      });
-	  function createListElement(title, link) {
-		var container = document.createElement("div");
-		var anchor = document.createElement("a");
-		var button = document.createElement("button");
-		
-		anchor.innerHTML = title;
-		anchor.href = link;
-		
-		button.innerHTML = "DELETE";
-		button.addEventListener('click', deleteItem);
-		
-		container.className = "container";
-		container.appendChild(anchor);
-		container.appendChild(button);
-		return container;
-	  }
-	  function deleteItem(e) {
-		var id = e.srcElement.parentNode.parentNode.id;
-		firebase.database().ref('link/' + id).remove();
-	  }
+	<script src="js/firebasedb.js"></script>
+    <script src="js/index.js">
+      
     </script>
   </body>
 </html>
